@@ -11,5 +11,6 @@ public:
 	ms3d(char* filename);
 	virtual ~ms3d();
 	void draw();
+	float* getJointPosition(char* jointName);
 };
 #endif
