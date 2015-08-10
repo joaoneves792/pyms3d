@@ -1,9 +1,13 @@
 
 #include "ms3d.h"
 
-ms3d::ms3d(char* filename){
+ms3d::ms3d(char* filename, bool overrideAmbient, bool overrideSpecular, bool overrideDiffuse, bool overrideEmissive){
 	_model = new CMS3DFile();
 	_model->LoadFromFile(filename);
+	_model->setOverrideAmbient(overrideAmbient);
+	_model->setOverrideDiffuse(overrideDiffuse);
+	_model->setOverrideSpecular(overrideSpecular);
+	_model->setOverrideEmissive(overrideEmissive);
 }
 
 ms3d::~ms3d(){

@@ -147,10 +147,22 @@ public:
 	void setMaterial(ms3d_material_t* material, int textureIndex);
 	void setMaterial(int texture, ms3d_group_t* group);
 
+	void setOverrideAmbient(bool overrideAmbient);
+	void setOverrideDiffuse(bool overrideDiffuse);
+	void setOverrideSpecular(bool overrideSpecular);
+	void setOverrideEmissive(bool overrideEmissive);
+
 
 
 private:
 	CMS3DFileI *_i;
+	bool _overrideAmbient;
+	bool _overrideDiffuse;
+	bool _overrideSpecular;
+	bool _overrideEmissive;
+	
+	float* _white;
+	float* _black;
 
 public:
 	CMS3DFile(const CMS3DFile& rhs);

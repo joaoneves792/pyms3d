@@ -8,7 +8,7 @@ private:
 	CMS3DFile* _model;
 
 public: 
-	ms3d(char* filename);
+	ms3d(char* filename, bool overrideAmbient=false, bool overrideSpecular=false, bool overrideDiffuse=false, bool overrideEmissive=false);
 	virtual ~ms3d();
 	void draw();
 	float* getJointPosition(char* jointName);
