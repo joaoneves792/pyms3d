@@ -2,6 +2,7 @@
 #define _ms3d_H_
 
 #include "MS3DFile.h"
+#include "Textures.h"
 
 class ms3d{
 private:
@@ -12,5 +13,14 @@ public:
 	virtual ~ms3d();
 	void draw();
 	float* getJointPosition(char* jointName);
+	void changeTexture(char* groupName, char* textureFile);
+};
+
+class Tex{
+private:
+	int _tex;
+public:
+	Tex(char* filename);
+	int getTexture();
 };
 #endif

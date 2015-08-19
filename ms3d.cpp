@@ -40,3 +40,10 @@ float* ms3d::getJointPosition(char* jointName){
 	return position;	
 }
 
+void ms3d::changeTexture(char* groupName, char* textureFile){
+	ms3d_group_t* group = NULL;
+	int newTexture = LoadGLTexture(textureFile);
+	int groupId = _model->FindGroupByName(groupName);
+	_model->GetGroupAt(groupId, &group);
+	_model->setMaterial(newTexture, group);
+}
