@@ -1,6 +1,6 @@
 all:
 	swig -c++ -python ms3d.i
-	g++ -O3 -fPIC -c ms3d.cpp Tex.cpp ms3d_wrap.cxx -I /usr/include/python3.4m -lms3d -lGL -lGLU -lglut -ljpeg -lpng
+	g++ -O3 -fPIC -c ms3d.cpp Tex.cpp ms3d_wrap.cxx -I /usr/include/python3.5m -lms3d -lGL -lGLU -lglut -ljpeg -lpng
 	ld -shared ms3d.o Tex.o ms3d_wrap.o -o _ms3d.so -lms3d -lGL -lGLU -lglut -ljpeg -lpng
 
 clean:
