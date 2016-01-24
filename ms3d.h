@@ -3,7 +3,17 @@
 
 #include <ms3d/MS3DFile.h>
 #include <ms3d/Textures.h>
+#include <ms3d/Shader.h>
 #include <GL/glut.h>
+
+class shader{
+private:
+	Shader* _shader;
+public:
+	shader(char* vertShader, char* fragShader);
+	virtual ~shader();
+	GLuint getShader();
+};
 
 class ms3d{
 private:
@@ -14,7 +24,7 @@ public:
 	virtual ~ms3d();
 	void draw();
 	void drawGL3();
-	void prepare(GLuint shader);
+	void prepare(Shader* shader);
 	float* getJointPosition(char* jointName);
 	void changeTexture(char* groupName, char* textureFile);
 };

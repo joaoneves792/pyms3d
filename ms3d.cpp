@@ -23,8 +23,8 @@ void ms3d::drawGL3(){
 	_model->drawGL3();
 }
 
-void ms3d::prepare(GLuint shader){
-	_model->prepareModel(shader);
+void ms3d::prepare(Shader* shader){
+	_model->prepareModel(shader->getShader());
 }
 
 float* ms3d::getJointPosition(char* jointName){
