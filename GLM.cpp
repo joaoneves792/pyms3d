@@ -56,7 +56,7 @@ void GLM::translate(double x, double y, double z){
 	uploadMatrix();
 }
 void GLM::rotate(float angle, double x, double y, double z){
-	*(_activeMatrix) = glm::rotate(*(_activeMatrix), angle, glm::vec3(x, y, z));
+	*(_activeMatrix) = glm::rotate(*(_activeMatrix), glm::radians(angle), glm::vec3(x, y, z));
 	uploadMatrix();
 }
 
