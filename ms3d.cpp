@@ -23,7 +23,7 @@ void ms3d::drawGL3(){
 	_model->drawGL3();
 }
 
-void ms3d::prepare(Shader* shader){
+void ms3d::prepare(shader* shader){
 	_model->prepareModel(shader->getShader());
 }
 

@@ -28,7 +28,7 @@ public:
 	virtual ~ms3d();
 	void draw();
 	void drawGL3();
-	void prepare(Shader* shader);
+	void prepare(shader* shader);
 	float* getJointPosition(char* jointName);
 	void changeTexture(char* groupName, char* textureFile);
 };
@@ -43,7 +43,7 @@ public:
 
 class GLM{
 private:
-	Shader* _shader;
+	shader* _shader;
 
 	glm::mat4 _Model;
 	glm::mat4 _View;
@@ -59,7 +59,7 @@ private:
 	std::stack<glm::mat4> _stack;
 
 public:
-	GLM(Shader* shader);
+	GLM(shader* shader);
 	virtual ~GLM();
 
 	void selectMatrix(int Matrix);

@@ -5,7 +5,7 @@
 #define VIEW 2
 #define PROJECTION 3
 
-GLM::GLM(Shader* shader){
+GLM::GLM(shader* shader){
 	_shader = shader;
 
 	_Model = glm::mat4(1.0f);
@@ -16,6 +16,11 @@ GLM::GLM(Shader* shader){
 	_modelID = glGetUniformLocation( _shader->getShader(), "Model" );
 	_viewID = glGetUniformLocation( _shader->getShader(), "View" );
 	_projectionID = glGetUniformLocation( _shader->getShader(), "Projection");
+	
+	//Get the identities loaded up...
+	glUniformMatrix4fv(_modelID, 1, GL_FALSE, glm::value_ptr(_Model));
+	glUniformMatrix4fv(_viewID, 1, GL_FALSE, glm::value_ptr(_View));
+	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
 
 	_activeMatrix = &_Projection;
 }
