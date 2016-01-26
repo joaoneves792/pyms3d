@@ -46,6 +46,11 @@ void GLM::perspective(double fov_degrees, double aspect_ratio, double near, doub
 	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
 }
 
+void GLM::otho(double left, double right, double bottom, double top, double near, double far){
+	_Projection = glm::ortho(left, right, bottom, top, near, far);
+	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+}
+
 void GLM::loadIdentity(){
 	*(_activeMatrix) = glm::mat4(1.0f);
 	uploadMatrix();
@@ -57,6 +62,11 @@ void GLM::translate(double x, double y, double z){
 }
 void GLM::rotate(float angle, double x, double y, double z){
 	*(_activeMatrix) = glm::rotate(*(_activeMatrix), glm::radians(angle), glm::vec3(x, y, z));
+	uploadMatrix();
+}
+
+void GLM::scale(double x, double y, double z){
+	*(_activeMatrix) = glm::scale(*(_activeMatrix), glm::vec3(x, y, z));
 	uploadMatrix();
 }
 

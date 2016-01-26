@@ -64,10 +64,11 @@ public:
 
 	void selectMatrix(int Matrix);
 	void perspective(double fov_degrees, double aspect_ratio, double near, double far);
-	//void otho(...)
+	void otho(double left, double right, double bottom, double top, double near, double far);
 	void loadIdentity();
 	void translate(double x, double y, double z);
 	void rotate(float angle, double x, double y, double z);
+	void scale(double x, double y, double z);
 	void pushMatrix();
 	void popMatrix();
 private:
@@ -78,6 +79,7 @@ private:
 
 class Lights{
 private:
+	GLint _lightingDisabledID;
 	GLint _enabled[MAX_LIGHTS];
 	GLint _enabledID;
 	GLint _colorsID[MAX_LIGHTS];
@@ -87,6 +89,8 @@ public:
 	Lights(shader* shader);
 	virtual ~Lights();
 
+	void enableLighting();
+	void disableLighting();
 	void enable(int light);
 	void disable(int light);
 	void setColor(int light, float red, float green, float blue, float intensity);

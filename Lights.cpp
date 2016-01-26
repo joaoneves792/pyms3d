@@ -6,6 +6,7 @@
 Lights::Lights(shader* shader){
 
 	_enabledID = glGetUniformLocation( shader->getShader(), "lightsEnabled[0]");
+	_lightingDisabledID = glGetUniformLocation( shader->getShader(), "disableLighting");
 
 	std::string lightsPosition = "lightPosition_worldspace";
 	std::string lightsColor = "lightColor";
@@ -21,10 +22,19 @@ Lights::Lights(shader* shader){
 	}
 
 	glUniform1iv(_enabledID, MAX_LIGHTS, &_enabled[0]);
+	glUniform1i(_lightingDisabledID, 1); //Start with lighting disabled
 }
 
 Lights::~Lights(){
 	//Is there anything to do here?
+}
+
+void Lights::enableLighting(){
+	glUniform1i(_lightingDisabledID, 0);
+}
+
+void Lights::disableLighting(){
+	glUniform1i(_lightingDisabledID, 1);
 }
 
 void Lights::enable(int light){
