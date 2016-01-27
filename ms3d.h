@@ -2,10 +2,10 @@
 #define _ms3d_H_
 
 #include <stack>
+#include <GL/glew.h>
 #include <ms3d/MS3DFile.h>
 #include <ms3d/Textures.h>
 #include <ms3d/Shader.h>
-#include <GL/glut.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -34,6 +34,7 @@ public:
 	void prepare(shader* shader);
 	float* getJointPosition(char* jointName);
 	void changeTexture(char* groupName, char* textureFile);
+	static void initGlew();
 };
 
 class Tex{

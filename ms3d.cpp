@@ -67,3 +67,7 @@ void ms3d::changeTexture(char* groupName, char* textureFile){
 void ms3d::changeRectangleTexture(int texture){
 	_model->setTexture(0, texture);	
 }
+
+void ms3d::initGlew(){
+	glewInit();
+}

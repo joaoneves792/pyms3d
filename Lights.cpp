@@ -1,5 +1,5 @@
+#include <GL/glew.h>
 #include "ms3d.h"
-#include <GLES3/gl3.h>
 #include <string>
 #include <sstream>
 
