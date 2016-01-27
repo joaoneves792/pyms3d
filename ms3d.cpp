@@ -10,6 +10,10 @@ ms3d::ms3d(char* filename, bool overrideAmbient, bool overrideSpecular, bool ove
 	_model->setOverrideEmissive(overrideEmissive);
 }
 
+ms3d::ms3d(){
+	_model = new CMS3DFile();
+}
+
 ms3d::~ms3d(){
 	_model->Clear();
 	delete _model;
@@ -21,6 +25,10 @@ void ms3d::draw(){
 
 void ms3d::drawGL3(){
 	_model->drawGL3();
+}
+
+void ms3d::createRectangle(float width, float height, int texture){
+	_model->createRectangle(width, height, texture);
 }
 
 void ms3d::prepare(shader* shader){
@@ -54,4 +62,8 @@ void ms3d::changeTexture(char* groupName, char* textureFile){
 	int groupId = _model->FindGroupByName(groupName);
 	_model->GetGroupAt(groupId, &group);
 	_model->setMaterial(newTexture, group);
+}
+
+void ms3d::changeRectangleTexture(int texture){
+	_model->setTexture(0, texture);	
 }

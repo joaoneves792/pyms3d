@@ -25,9 +25,12 @@ private:
 
 public: 
 	ms3d(char* filename, bool overrideAmbient=false, bool overrideSpecular=false, bool overrideDiffuse=false, bool overrideEmissive=false);
+	ms3d();
 	virtual ~ms3d();
 	void draw();
 	void drawGL3();
+	void createRectangle(float width, float height, int texture);
+	void changeRectangleTexture(int texture);
 	void prepare(shader* shader);
 	float* getJointPosition(char* jointName);
 	void changeTexture(char* groupName, char* textureFile);
