@@ -11,3 +11,6 @@ shader::~shader(){
 GLuint shader::getShader(){
 	return _shader->getShader();
 }
+void shader::use(){
+	_shader->use();
+}

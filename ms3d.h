@@ -17,6 +17,7 @@ public:
 	shader(char* vertShader, char* fragShader);
 	virtual ~shader();
 	GLuint getShader();
+	void use();
 };
 
 class ms3d{
