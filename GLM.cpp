@@ -1,21 +1,12 @@
 #include <GL/glew.h>
 #include "ms3d.h"
 
-#define MODEL 1
-#define VIEW 2
-#define PROJECTION 3
-
 GLM::GLM(shader* shader){
-	_shader = shader;
-
 	_Model = glm::mat4(1.0f);
 	_View = glm::mat4(1.0f);
 	_Projection = glm::mat4(1.0f);
 	
-	
-	_modelID = glGetUniformLocation( _shader->getShader(), "Model" );
-	_viewID = glGetUniformLocation( _shader->getShader(), "View" );
-	_projectionID = glGetUniformLocation( _shader->getShader(), "Projection");
+	changeShader(shader);	
 	
 	//Get the identities loaded up...
 	glUniformMatrix4fv(_modelID, 1, GL_FALSE, glm::value_ptr(_Model));
@@ -25,8 +16,16 @@ GLM::GLM(shader* shader){
 	_activeMatrix = &_Projection;
 }
 
+
 GLM::~GLM(){
 	//Maybe do something here?
+}
+
+void GLM::changeShader(shader* newShader){
+	_shader = newShader;
+	_modelID = glGetUniformLocation( _shader->getShader(), "Model" );
+	_viewID = glGetUniformLocation( _shader->getShader(), "View" );
+	_projectionID = glGetUniformLocation( _shader->getShader(), "Projection");
 }
 
 void GLM::selectMatrix(int Matrix){
@@ -49,6 +48,11 @@ void GLM::perspective(double fov_degrees, double aspect_ratio, double near, doub
 void GLM::otho(double left, double right, double bottom, double top, double near, double far){
 	_Projection = glm::ortho(left, right, bottom, top, near, far);
 	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+}
+
+void GLM::lookAt(double eyeX, double eyeY, double eyeZ, double centerX, double centerY, double centerZ, double upX, double upY, double upZ){
+	_View = glm::lookAt(glm::vec3(eyeX, eyeY, eyeZ), glm::vec3(centerX, centerY, centerZ), glm::vec3(upX, upY, upZ));
+	glUniformMatrix4fv(_viewID, 1, GL_FALSE, glm::value_ptr(_View));
 }
 
 void GLM::loadIdentity(){
@@ -87,4 +91,8 @@ void GLM::uploadMatrix(){
 		glUniformMatrix4fv(_viewID, 1, GL_FALSE, glm::value_ptr(_View));
 	else if(_activeMatrixID == PROJECTION)
 		glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+}
+
+glm::mat4 GLM::getMVP(){
+	return _Projection * _View * _Model;
 }

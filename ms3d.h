@@ -46,6 +46,10 @@ public:
 	int getTexture();
 };
 
+#define MODEL 1
+#define VIEW 2
+#define PROJECTION 3
+
 class GLM{
 private:
 	shader* _shader;
@@ -70,12 +74,15 @@ public:
 	void selectMatrix(int Matrix);
 	void perspective(double fov_degrees, double aspect_ratio, double near, double far);
 	void otho(double left, double right, double bottom, double top, double near, double far);
+	void lookAt(double eyeX, double eyeY, double eyeZ, double centerX, double centerY, double centerZ, double upX, double upY, double upZ);
 	void loadIdentity();
 	void translate(double x, double y, double z);
 	void rotate(float angle, double x, double y, double z);
 	void scale(double x, double y, double z);
 	void pushMatrix();
 	void popMatrix();
+	void changeShader(shader* newShader);
+	glm::mat4 getMVP();
 private:
 	void uploadMatrix();
 };
@@ -101,6 +108,27 @@ public:
 	void setColor(int light, float red, float green, float blue, float intensity);
 	void setPosition(int light, float x, float y, float z);
 	void setCone(int light, float direction_x, float direction_y, float direction_z, float angle);
+};
+
+#define SHADOW_MAP_SIZE 1024
+
+class Shadows{
+private:
+	shader* _normalShader;
+	shader* _shadowMapShader;
+	GLuint _framebuffer;
+	GLuint _depthTexture;
+	GLM* _glm;
+
+	glm::mat4 _depthBiasMVP;
+	GLuint _depthBiasMVPID;
+	GLuint _shadowMapID;
+	int _windowSize[2];
+public:
+	Shadows(GLM* glm, shader* normalShader, shader* shadowMapShader, int window_width, int window_height);
+	virtual ~Shadows();
+	void prepareToMapDepth(float lightPosX, float lightPosY, float lightPosZ);
+	void returnToNormalDrawing();
 };
 
 #endif
