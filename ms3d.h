@@ -124,11 +124,18 @@ private:
 	GLuint _depthBiasMVPID;
 	GLuint _shadowMapID;
 	int _windowSize[2];
+	
+	int _textureWidth;
+	int _textureHeight;
+	float _orthoBox[6];
+
 public:
-	Shadows(GLM* glm, shader* normalShader, shader* shadowMapShader, int window_width, int window_height);
+	Shadows(GLM* glm, shader* normalShader, shader* shadowMapShader, int window_width, int window_height, int shadow_map_width, int shadow_map_height);
 	virtual ~Shadows();
 	void prepareToMapDepth(float lightPosX, float lightPosY, float lightPosZ);
+	void changeOrthoBox(float left, float right, float bottom, float top, float near, float far);
 	void returnToNormalDrawing();
+	int getShadowTexture();
 };
 
 #endif
