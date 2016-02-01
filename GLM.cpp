@@ -1,3 +1,5 @@
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <GL/glew.h>
 #include "ms3d.h"
 
@@ -74,6 +76,32 @@ void GLM::rotate(float angle, double x, double y, double z){
 
 void GLM::scale(double x, double y, double z){
 	*(_activeMatrix) = glm::scale(*(_activeMatrix), glm::vec3(x, y, z));
+	uploadMatrix();
+}
+
+void GLM::billboard(double x, double y, double z){
+	//Transpose the rotation of the View matrix (effectively its inverse)
+
+	_Model[0][0] = _View[0][0];
+	_Model[1][0] = _View[0][1];
+	_Model[2][0] = _View[0][2];
+	_Model[3][0] = x;
+
+	_Model[0][1] = _View[1][0];
+	_Model[1][1] = _View[1][1];
+	_Model[2][1] = _View[1][2];
+	_Model[3][1] = y;
+	
+	_Model[0][2] = _View[2][0];
+	_Model[1][2] = _View[2][1];
+	_Model[2][2] = _View[2][2];
+	_Model[3][2] = z;
+
+	_Model[0][3] = 0;
+	_Model[1][3] = 0;
+	_Model[2][3] = 0;
+	_Model[3][3] = 1;
+
 	uploadMatrix();
 }
 
