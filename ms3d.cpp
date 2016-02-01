@@ -71,3 +71,12 @@ void ms3d::changeRectangleTexture(int texture){
 void ms3d::initGlew(){
 	glewInit();
 }
+
+void ms3d::changeMaterialEmissive(char* name, float red, float green, float blue){
+	_model->setMaterialEmissive(name, red, green, blue);
+}
+
+
+void ms3d::changeMaterialTransparency(char* name, float alpha){
+	_model->setMaterialTransparency(name, 1-alpha);
+}

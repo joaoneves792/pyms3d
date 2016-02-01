@@ -19,6 +19,9 @@ Shadows::Shadows(GLM* glm, shader* normalShader, shader* shadowMapShader, int wi
 
 	_depthBiasMVPID = glGetUniformLocation( normalShader->getShader(), "depthBiasMVP");
 	_shadowMapID = glGetUniformLocation( normalShader->getShader(), "shadowMap" );
+	_shadowTypeID = glGetUniformLocation( normalShader->getShader(), "shadowType" );
+
+	setShadowType(0);
 
 	glGenFramebuffers(1, &_framebuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
@@ -111,5 +114,7 @@ void Shadows::returnToNormalDrawing(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glCullFace(GL_BACK);
 }
-
-
+	
+void Shadows::setShadowType(int type){
+	glUniform1i(_shadowTypeID, type);
+}

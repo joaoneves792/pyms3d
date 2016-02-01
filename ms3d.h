@@ -35,6 +35,8 @@ public:
 	void prepare(shader* shader);
 	float* getJointPosition(char* jointName);
 	void changeTexture(char* groupName, char* textureFile);
+	void changeMaterialEmissive(char* name, float red, float green, float blue);
+	void changeMaterialTransparency(char* name, float alpha);
 	static void initGlew();
 };
 
@@ -123,6 +125,7 @@ private:
 	glm::mat4 _depthBiasMVP;
 	GLuint _depthBiasMVPID;
 	GLuint _shadowMapID;
+	GLuint _shadowTypeID;
 	int _windowSize[2];
 	
 	int _textureWidth;
@@ -136,6 +139,7 @@ public:
 	void changeOrthoBox(float left, float right, float bottom, float top, float near, float far);
 	void returnToNormalDrawing();
 	int getShadowTexture();
+	void setShadowType(int type);
 };
 
 #endif
