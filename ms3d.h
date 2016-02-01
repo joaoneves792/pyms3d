@@ -65,7 +65,8 @@ private:
 
 	GLuint _modelID;
 	GLuint _viewID;
-	GLuint _projectionID;
+	//GLuint _projectionID;
+	GLuint _MVPID;
 
 	std::stack<glm::mat4> _stack;
 
@@ -87,6 +88,7 @@ public:
 	glm::mat4 getMVP();
 private:
 	void uploadMatrix();
+	void uploadMVP();
 };
 
 #define MAX_LIGHTS 10

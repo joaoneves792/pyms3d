@@ -5,13 +5,13 @@ GLM::GLM(shader* shader){
 	_Model = glm::mat4(1.0f);
 	_View = glm::mat4(1.0f);
 	_Projection = glm::mat4(1.0f);
-	
 	changeShader(shader);	
 	
 	//Get the identities loaded up...
 	glUniformMatrix4fv(_modelID, 1, GL_FALSE, glm::value_ptr(_Model));
 	glUniformMatrix4fv(_viewID, 1, GL_FALSE, glm::value_ptr(_View));
-	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+	//glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+	uploadMVP();
 
 	_activeMatrix = &_Projection;
 }
@@ -25,7 +25,10 @@ void GLM::changeShader(shader* newShader){
 	_shader = newShader;
 	_modelID = glGetUniformLocation( _shader->getShader(), "Model" );
 	_viewID = glGetUniformLocation( _shader->getShader(), "View" );
-	_projectionID = glGetUniformLocation( _shader->getShader(), "Projection");
+	//_projectionID = glGetUniformLocation( _shader->getShader(), "Projection");
+	
+
+	_MVPID = glGetUniformLocation( _shader->getShader(), "MVP");
 }
 
 void GLM::selectMatrix(int Matrix){
@@ -42,12 +45,12 @@ void GLM::selectMatrix(int Matrix){
 
 void GLM::perspective(double fov_degrees, double aspect_ratio, double near, double far){
 	_Projection = glm::perspective(glm::radians(fov_degrees), aspect_ratio, near, far);
-	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+	uploadMVP();
 }
 
 void GLM::otho(double left, double right, double bottom, double top, double near, double far){
 	_Projection = glm::ortho(left, right, bottom, top, near, far);
-	glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+	uploadMVP();
 }
 
 void GLM::lookAt(double eyeX, double eyeY, double eyeZ, double centerX, double centerY, double centerZ, double upX, double upY, double upZ){
@@ -89,8 +92,11 @@ void GLM::uploadMatrix(){
 		glUniformMatrix4fv(_modelID, 1, GL_FALSE, glm::value_ptr(_Model));
 	else if(_activeMatrixID == VIEW)
 		glUniformMatrix4fv(_viewID, 1, GL_FALSE, glm::value_ptr(_View));
-	else if(_activeMatrixID == PROJECTION)
-		glUniformMatrix4fv(_projectionID, 1, GL_FALSE, glm::value_ptr(_Projection));
+	uploadMVP();
+}
+
+void GLM::uploadMVP(){
+	glUniformMatrix4fv(_MVPID, 1, GL_FALSE, glm::value_ptr(getMVP()));
 }
 
 glm::mat4 GLM::getMVP(){
