@@ -46,6 +46,7 @@ private:
 public:
 	Tex(char* filename);
 	int getTexture();
+	int genTexture(unsigned char *data, int width, int height);
 };
 
 #define MODEL 1
@@ -143,6 +144,25 @@ public:
 	void returnToNormalDrawing();
 	int getShadowTexture();
 	void setShadowType(int type);
+};
+
+class Text{
+private:
+	GLuint _texture;
+	GLuint _vao;
+        int _width;
+	int _height;
+	int _rows;
+	int _columns;
+	int _fontSize;
+	int _vSpace;
+	int _hSpace;	
+
+public:
+	Text(char* bitmapFont, int width, int height, int rows, int columns, int fontSize, int vertSpacing, int horizSpacing);
+	virtual ~Text();
+
+	void drawTextLine(char* text, float size);
 };
 
 #endif
