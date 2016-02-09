@@ -1,7 +1,13 @@
 
 %module ms3d
 %{
+        #include "shader.h"
         #include "ms3d.h"
+        #include "Tex.h"
+        #include "GLM.h"
+        #include "Lights.h"
+        #include "Shadows.h"
+        #include "Text.h"
 %}
 
 %typemap(out) float* getJointPosition{
@@ -14,4 +20,10 @@
         }
 } 
 
+%include "shader.h"
 %include "ms3d.h"
+%include "Tex.h"
+%include "GLM.h"
+%include "Lights.h"
+%include "Shadows.h"
+%include "Text.h"

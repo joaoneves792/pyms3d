@@ -5,13 +5,14 @@ CXXFLAGS=-O3 -Wall -fPIC -c
 LIBS=-I /usr/include/python3.5m -lms3d -lGL -lGLEW -ljpeg -lpng
 LDFLAGS= -shared
 
-#Really dumb rule, but swig generates a .cxx and make doesnt know what to do with it!
-%.o : %.cxx
-	$(CC) $(CXXFLAGS) $< -o $@ $(LIBS)
 
 all: swig $(OBJS)
 	$(LD) $(LDFLAGS) $(OBJS) -o _ms3d.so $(LIBS)
 	cat constants.py >> ms3d.py
+
+#Really dumb rule, but swig generates a .cxx and make doesnt know what to do with it!
+ms3d_wrap.o : ms3d_wrap.cxx
+	$(CC) $(CXXFLAGS) ms3d_wrap.cxx -o ms3d_wrap.o $(LIBS)
 
 swig:
 	swig -c++ -python ms3d.i

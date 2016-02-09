@@ -1,5 +1,9 @@
 
+#include <GL/glew.h>
+#include <ms3d/MS3DFile.h>
+#include <ms3d/Textures.h>
 #include "ms3d.h"
+#include "shader.h"
 
 ms3d::ms3d(char* filename, bool overrideAmbient, bool overrideSpecular, bool overrideDiffuse, bool overrideEmissive){
 	_model = new CMS3DFile();

@@ -1,7 +1,10 @@
 #include <GL/glew.h>
-#include "ms3d.h"
 #include <string>
+#include <math.h>
 #include <sstream>
+#include <glm/glm.hpp>
+#include "Lights.h"
+#include "shader.h"
 
 Lights::Lights(shader* shader){
 

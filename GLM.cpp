@@ -1,7 +1,9 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <GL/glew.h>
-#include "ms3d.h"
+#include <stack>
+#include "GLM.h"
+#include "shader.h"
 
 GLM::GLM(shader* shader){
 	_Model = glm::mat4(1.0f);

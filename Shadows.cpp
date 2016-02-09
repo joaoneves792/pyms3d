@@ -1,4 +1,8 @@
-#include "ms3d.h"
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include "Shadows.h"
+#include "shader.h"
+#include "GLM.h"
 
 Shadows::Shadows(GLM* glm, shader* normalShader, shader* shadowMapShader, int window_width, int window_height, int shadow_map_width, int shadow_map_height){
 	_glm = glm;

@@ -1,4 +1,4 @@
-#include "ms3d.h"
+#include "Tex.h"
 #include <ms3d/Textures.h>
 
 Tex::Tex(char* filename){

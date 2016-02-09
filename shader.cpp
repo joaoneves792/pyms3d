@@ -1,4 +1,6 @@
-#include "ms3d.h"
+#include "shader.h"
+#include <GL/glew.h>
+#include <ms3d/Shader.h>
 
 shader::shader(char* vertShader, char* fragShader){
 	_shader = new Shader(vertShader, fragShader);
