@@ -1,5 +1,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/rotate_normalized_axis.hpp>
 #include <GL/glew.h>
 #include <stack>
 #include "GLM.h"
@@ -76,6 +78,12 @@ void GLM::rotate(float angle, double x, double y, double z){
 	uploadMatrix();
 }
 
+void GLM::rotateNormalizedAxis(float angle, double x, double y, double z){
+	*(_activeMatrix) = glm::rotateNormalizedAxis(*(_activeMatrix), glm::radians(angle), glm::vec3(x, y, z));
+	uploadMatrix();
+}
+
+
 void GLM::scale(double x, double y, double z){
 	*(_activeMatrix) = glm::scale(*(_activeMatrix), glm::vec3(x, y, z));
 	uploadMatrix();
@@ -129,6 +137,19 @@ void GLM::uploadMVP(){
 	glUniformMatrix4fv(_MVPID, 1, GL_FALSE, glm::value_ptr(getMVP()));
 }
 
+void GLM::multiply(glm::mat4 mat){
+	*(_activeMatrix) *= mat;
+	uploadMatrix();
+}
+
 glm::mat4 GLM::getMVP(){
 	return _Projection * _View * _Model;
 }
+
+/*Vector operations*/
+glm::vec3 GLM::vectorRotate(double x, double y, double z, float angle, double axisX, double axisY, double axisZ){
+        return glm::rotate(glm::vec3(x, y, z), glm::radians(angle), glm::vec3(axisX, axisY, axisZ));	
+}
+glm::vec3 GLM::normalizeVector(double x, double y, double z){
+	return glm::normalize(glm::vec3(x, y, z));
+}	

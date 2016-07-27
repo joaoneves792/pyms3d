@@ -46,7 +46,13 @@ public:
 	void pushMatrix();
 	void popMatrix();
 	void changeShader(shader* newShader);
+	
+	void rotateNormalizedAxis(float angle, double x, double y, double z);
+	void multiply(glm::mat4 mat);
 	glm::mat4 getMVP();
+
+	glm::vec3 vectorRotate(double x, double y, double z, float angle, double axisX, double axisY, double axisZ);
+	glm::vec3 normalizeVector(double x, double y, double z);
 private:
 	void uploadMatrix();
 	void uploadMVP();
