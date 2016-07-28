@@ -5,8 +5,10 @@
 #include <glm/glm.hpp>
 #include "GLM.h"
 
+class Camera;
+
 class Body{
-private:
+protected:
 	GLM* _glm;
 	
 	double _mass;
@@ -22,13 +24,13 @@ private:
 	glm::vec3 _left;
 	glm::vec3 _up;
 
-
 public:
 	Body(GLM *glm, double x, double y, double z, double mass);
 	void setAxis(double forwardsX, double forwardsY, double forwardsZ, double leftX, double leftY, double leftZ, double upX, double upY, double upZ);
 	virtual ~Body();
 
 	glm::vec3 getPosition();
+	glm::vec3 getForwardsVector();
 
 	void setX(double x);
 	void setY(double y);
@@ -39,11 +41,16 @@ public:
 	void addForwardForce(double f);
 	void addForce(double fx, double fy, double fz);
 	//void addTorque(double fx, double fy, double fz, double offset_x, double offset_y, double offset_z);
+	void setVelocity(double vx, double vy, double vz);
 	void integrate(float dt);
 
 	void updateRotation(float yaw, float pitch, float roll);
-	
+
 	void applyRotation();
 	void applyPosition();
+
+	void applyNegativePosition();
+	void applyNegativeRotation();
+
 };
 #endif

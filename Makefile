@@ -1,4 +1,4 @@
-OBJS= ms3d.o Tex.o shader.o GLM.o Lights.o Shadows.o Text.o Body.o  ms3d_wrap.o 
+OBJS= ms3d.o Tex.o shader.o GLM.o Lights.o Shadows.o Text.o Body.o ms3d_wrap.o 
 
 CC=g++
 CXXFLAGS=-O3 -Wall -fPIC -c 

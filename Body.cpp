@@ -1,6 +1,7 @@
 #include "Body.h"
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include "Camera.h"
 
 Body::Body(GLM *glm, double x, double y, double z, double mass){
 	_glm = glm;
@@ -39,6 +40,9 @@ void Body::setAxis(double forwardsX, double forwardsY, double forwardsZ, double 
 glm::vec3 Body::getPosition(){
 	return _position;
 }
+glm::vec3 Body::getForwardsVector(){
+	return _forwards;
+}
 
 void Body::setX(double x){
 	_position[0] = x;
@@ -68,6 +72,12 @@ void Body::addForwardForce(double f){
 	_forces[2] += _forwards[2]*f;
 }
 
+void Body::setVelocity(double vx, double vy, double vz){
+	_velocity[0] = vx;
+	_velocity[1] = vy;
+	_velocity[2] = vz;
+}
+
 void Body::updateRotation(float yaw, float pitch, float roll){
 	glm::quat rollQuat = glm::angleAxis(roll, _forwards);
 	_left = glm::rotate(rollQuat, _left);
@@ -84,6 +94,10 @@ void Body::updateRotation(float yaw, float pitch, float roll){
 	glm::quat rotationChange = yawQuat * pitchQuat * rollQuat;
 
 	_currentRotation = rotationChange * _currentRotation;
+
+	_left = glm::normalize(_left);
+	_up = glm::normalize(_up);
+	_forwards = glm::normalize(_forwards);
 	
 }
 
@@ -92,25 +106,27 @@ void Body::integrate(float dt){
 
 	glm::vec3 acceleration = glm::vec3(_forces[0]/_mass, _forces[1]/_mass, _forces[2]/_mass);
 	_velocity += acceleration*dt;
+
+	if(_drag > 0){
+		double drag = (_drag/_mass)*dt;
+		for(int i=0; i<3; i++)
+			if (_velocity[i] > 0){
+				if (_velocity[i] - drag < 0)
+					_velocity[i] = 0;
+				else
+					_velocity[i] -= drag;
+			}else if (_velocity[i] < 0){
+				if (_velocity[i] + drag > 0)
+					_velocity[i] = 0;
+				else
+					_velocity[i] += drag;
+			}
+	}
+
 	_position += _velocity*dt;
 	_forces[0] = 0;
 	_forces[1] = 0;
 	_forces[2] = 0;
-
-	if(_drag > 0){
-		for(int i=0; i<3; i++)
-			if (_velocity[i] > 0){
-				if (_velocity[i] - _drag < 0)
-					_velocity[i] = 0;
-				else
-					_velocity[i] -= _drag;
-			}else if (_velocity[i] < 0){
-				if (_velocity[i] - _drag > 0)
-					_velocity[i] = 0;
-				else
-					_velocity[i] += _drag;
-			}
-	}
 
 	/*TODO angular stuff*/
 }
@@ -123,4 +139,13 @@ void Body::applyRotation(){
 
 void Body::applyPosition(){
 	_glm->translate(_position[0], _position[1], _position[2]);
+}
+
+void Body::applyNegativePosition(){
+	_glm->translate(-_position[0], -_position[1], -_position[2]);
+}
+
+void Body::applyNegativeRotation(){
+	glm::mat4 rotationMatrix = glm::inverse(glm::toMat4(_currentRotation));
+	_glm->multiply(rotationMatrix);
 }

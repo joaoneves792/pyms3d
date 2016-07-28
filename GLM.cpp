@@ -152,4 +152,11 @@ glm::vec3 GLM::vectorRotate(double x, double y, double z, float angle, double ax
 }
 glm::vec3 GLM::normalizeVector(double x, double y, double z){
 	return glm::normalize(glm::vec3(x, y, z));
-}	
+}
+
+glm::vec3 GLM::crossProduct(double x1, double y1, double z1, double x2, double y2, double z2){
+	return glm::cross(glm::vec3(x1, y1, z1), glm::vec3(x2, y2, z2));
+}
+double GLM::vectorLength(double x, double y, double z){
+	return glm::length(glm::vec3(x, y, z));
+}

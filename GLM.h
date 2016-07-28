@@ -53,6 +53,8 @@ public:
 
 	glm::vec3 vectorRotate(double x, double y, double z, float angle, double axisX, double axisY, double axisZ);
 	glm::vec3 normalizeVector(double x, double y, double z);
+	glm::vec3 crossProduct(double x1, double y1, double z1, double x2, double y2, double z2);
+	double vectorLength(double x, double y, double z);
 private:
 	void uploadMatrix();
 	void uploadMVP();
