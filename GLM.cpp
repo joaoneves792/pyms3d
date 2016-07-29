@@ -146,6 +146,15 @@ glm::mat4 GLM::getMVP(){
 	return _Projection * _View * _Model;
 }
 
+int* GLM::get2DPoint(double x, double y, double z, int width, int height){
+	glm::mat4 projectionView = _Projection * _View;
+	glm::vec4 point3D = projectionView * glm::vec4(x, y, z, 0);
+	int* winPos = new int[2];
+	winPos[0] = (int)(((point3D[0] + 1) / 2.0)*width);
+	winPos[1] = (int)(((1 - point3D[1]) / 2.0)*height);
+	return winPos;
+}
+
 /*Vector operations*/
 glm::vec3 GLM::vectorRotate(double x, double y, double z, float angle, double axisX, double axisY, double axisZ){
         return glm::rotate(glm::vec3(x, y, z), glm::radians(angle), glm::vec3(axisX, axisY, axisZ));	

@@ -51,6 +51,8 @@ public:
 	void multiply(glm::mat4 mat);
 	glm::mat4 getMVP();
 
+	int* get2DPoint(double x, double y, double z, int width, int height);
+
 	glm::vec3 vectorRotate(double x, double y, double z, float angle, double axisX, double axisY, double axisZ);
 	glm::vec3 normalizeVector(double x, double y, double z);
 	glm::vec3 crossProduct(double x1, double y1, double z1, double x2, double y2, double z2);
