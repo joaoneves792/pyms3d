@@ -15,6 +15,7 @@ public:
 	void draw();
 	void drawGL3();
 	void createRectangle(float width, float height, int texture);
+	void translateModel(float x, float y, float z);
 	void changeRectangleTexture(int texture);
 	void prepare(shader* shader);
 	float* getJointPosition(char* jointName);

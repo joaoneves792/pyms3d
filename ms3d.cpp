@@ -35,6 +35,9 @@ void ms3d::createRectangle(float width, float height, int texture){
 	_model->createRectangle(width, height, texture);
 }
 
+void ms3d::translateModel(float x, float y, float z){
+	_model->translateModel(x, y, z);
+}
 void ms3d::prepare(shader* shader){
 	_model->prepareModel(shader->getShader());
 }
