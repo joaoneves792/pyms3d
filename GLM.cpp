@@ -148,10 +148,17 @@ glm::mat4 GLM::getMVP(){
 
 int* GLM::get2DPoint(double x, double y, double z, int width, int height){
 	glm::mat4 projectionView = _Projection * _View;
-	glm::vec4 point3D = projectionView * glm::vec4(x, y, z, 0);
+	glm::vec4 point3D = projectionView * glm::vec4(x, y, z, 1);
+
 	int* winPos = new int[2];
-	winPos[0] = (int)(((point3D[0] + 1) / 2.0)*width);
-	winPos[1] = (int)(((1 - point3D[1]) / 2.0)*height);
+	if (point3D[3] > 0){
+		winPos[0] = (int)((((point3D[0]/point3D[3]) + 1) / 2.0)*width);
+		winPos[1] = (int)(((1 - (point3D[1]/point3D[3])) / 2.0)*height);
+	}else{
+		winPos[0] = (int)((((point3D[0]/(-point3D[3])) + 1) / 2.0)*width);
+		winPos[1] = (int)(((1 - (point3D[1]/(-point3D[3]))) / 2.0)*height);
+	}
+
 	return winPos;
 }
 
@@ -162,10 +169,21 @@ glm::vec3 GLM::vectorRotate(double x, double y, double z, float angle, double ax
 glm::vec3 GLM::normalizeVector(double x, double y, double z){
 	return glm::normalize(glm::vec3(x, y, z));
 }
+glm::vec2 GLM::normalizeVector(double x, double y){
+	return glm::normalize(glm::vec2(x, y));
+}
 
 glm::vec3 GLM::crossProduct(double x1, double y1, double z1, double x2, double y2, double z2){
 	return glm::cross(glm::vec3(x1, y1, z1), glm::vec3(x2, y2, z2));
 }
+double GLM::dotProduct(double x1, double y1, double z1, double x2, double y2, double z2){
+	return glm::dot(glm::vec3(x1, y1, z1), glm::vec3(x2, y2, z2));
+}
+
+double GLM::dotProduct(double x1, double y1, double x2, double y2){
+	return glm::dot(glm::vec2(x1, y1), glm::vec2(x2, y2));
+}
+
 double GLM::vectorLength(double x, double y, double z){
 	return glm::length(glm::vec3(x, y, z));
 }
