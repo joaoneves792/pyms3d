@@ -31,6 +31,7 @@ public:
 
 	glm::vec3 getPosition();
 	glm::vec3 getForwardsVector();
+	glm::vec3 getVelocityVector();
 
 	void setX(double x);
 	void setY(double y);
@@ -45,6 +46,8 @@ public:
 	void integrate(float dt);
 
 	void updateRotation(float yaw, float pitch, float roll);
+	void rotateToAlignWith(double vx, double vy, double vz);
+	
 
 	void applyRotation();
 	void applyPosition();

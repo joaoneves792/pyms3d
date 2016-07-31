@@ -43,6 +43,9 @@ glm::vec3 Body::getPosition(){
 glm::vec3 Body::getForwardsVector(){
 	return _forwards;
 }
+glm::vec3 Body::getVelocityVector(){
+	return _velocity;
+}
 
 void Body::setX(double x){
 	_position[0] = x;
@@ -99,6 +102,23 @@ void Body::updateRotation(float yaw, float pitch, float roll){
 	_up = glm::normalize(_up);
 	_forwards = glm::normalize(_forwards);
 	
+}
+
+void Body::rotateToAlignWith(double vx, double vy, double vz){
+	glm::vec3 v = glm::vec3(vx, vy, vz);
+	v = glm::normalize(v);
+	_forwards = glm::normalize(_forwards);	
+	
+	glm::quat rotationQuat = glm::rotation(_forwards, v);
+	
+	_up = glm::rotate(rotationQuat, _up);
+	_left = glm::rotate(rotationQuat, _left);
+	_forwards = glm::rotate(rotationQuat, _forwards);
+	_left = glm::normalize(_left);
+	_up = glm::normalize(_up);
+	_forwards = glm::normalize(_forwards);
+
+	_currentRotation = rotationQuat * _currentRotation;
 }
 
 void Body::integrate(float dt){
