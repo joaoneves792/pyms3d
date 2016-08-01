@@ -43,6 +43,12 @@ glm::vec3 Body::getPosition(){
 glm::vec3 Body::getForwardsVector(){
 	return _forwards;
 }
+glm::vec3 Body::getUpVector(){
+	return _up;
+}
+glm::vec3 Body::getLeftVector(){
+	return _left;
+}
 glm::vec3 Body::getVelocityVector(){
 	return _velocity;
 }
@@ -123,26 +129,26 @@ void Body::rotateToAlignWith(double vx, double vy, double vz){
 
 void Body::integrate(float dt){
 	/*Its up to the application to get the units right*/
+	if(_mass > 0){
+		glm::vec3 acceleration = glm::vec3(_forces[0]/_mass, _forces[1]/_mass, _forces[2]/_mass);
+		_velocity += acceleration*dt;
 
-	glm::vec3 acceleration = glm::vec3(_forces[0]/_mass, _forces[1]/_mass, _forces[2]/_mass);
-	_velocity += acceleration*dt;
-
-	if(_drag > 0){
-		double drag = (_drag/_mass)*dt;
-		for(int i=0; i<3; i++)
-			if (_velocity[i] > 0){
-				if (_velocity[i] - drag < 0)
-					_velocity[i] = 0;
-				else
-					_velocity[i] -= drag;
-			}else if (_velocity[i] < 0){
-				if (_velocity[i] + drag > 0)
-					_velocity[i] = 0;
-				else
-					_velocity[i] += drag;
-			}
+		if(_drag > 0){
+			double drag = (_drag/_mass)*dt;
+			for(int i=0; i<3; i++)
+				if (_velocity[i] > 0){
+					if (_velocity[i] - drag < 0)
+						_velocity[i] = 0;
+					else
+						_velocity[i] -= drag;
+				}else if (_velocity[i] < 0){
+					if (_velocity[i] + drag > 0)
+						_velocity[i] = 0;
+					else
+						_velocity[i] += drag;
+				}
+		}
 	}
-
 	_position += _velocity*dt;
 	_forces[0] = 0;
 	_forces[1] = 0;

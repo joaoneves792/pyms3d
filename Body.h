@@ -31,6 +31,8 @@ public:
 
 	glm::vec3 getPosition();
 	glm::vec3 getForwardsVector();
+	glm::vec3 getUpVector();
+	glm::vec3 getLeftVector();
 	glm::vec3 getVelocityVector();
 
 	void setX(double x);
