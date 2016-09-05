@@ -1,7 +1,6 @@
 #include "Body.h"
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include "Camera.h"
 
 Body::Body(GLM *glm, double x, double y, double z, double mass){
 	_glm = glm;
