@@ -49,6 +49,7 @@ public:
 
 	void updateRotation(float yaw, float pitch, float roll);
 	void rotateToAlignWith(double vx, double vy, double vz);
+	void rotateToAlignWithLerp(double vx, double vy, double vz, float factor);
 	
 
 	void applyRotation();

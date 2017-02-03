@@ -125,6 +125,27 @@ void Body::rotateToAlignWith(double vx, double vy, double vz){
 
 	_currentRotation = rotationQuat * _currentRotation;
 }
+void Body::rotateToAlignWithLerp(double vx, double vy, double vz, float factor){
+
+	glm::vec3 v = glm::vec3(vx, vy, vz);
+	v = glm::normalize(v);
+	_forwards = glm::normalize(_forwards);	
+	
+	glm::quat intendedRotationQuat = glm::rotation(_forwards, v);
+
+	
+	glm::quat rotationQuat = glm::lerp(intendedRotationQuat, _currentRotation, factor); 
+	
+	
+	_up = glm::rotate(rotationQuat, _up);
+	_left = glm::rotate(rotationQuat, _left);
+	_forwards = glm::rotate(rotationQuat, _forwards);
+	_left = glm::normalize(_left);
+	_up = glm::normalize(_up);
+	_forwards = glm::normalize(_forwards);
+
+	_currentRotation = rotationQuat * _currentRotation;
+}
 
 void Body::integrate(float dt){
 	/*Its up to the application to get the units right*/
